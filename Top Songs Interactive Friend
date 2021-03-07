@@ -117,7 +117,7 @@ def num_artist(artist, songs):
     return artist + " has " + str(artist_number) + " top songs this month."
 
 def nth_top_song(n, songs):
-    if n >= len(songs):
+    if n > len(songs):
       print("Oops - our list doesn't go that far.")
       print("Try entering a positive number less than " + str(len(songs)))
       n = int(input())
