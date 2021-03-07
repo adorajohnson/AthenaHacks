@@ -119,7 +119,7 @@ def num_artist(artist, songs):
 def nth_top_song(n, songs):
     if n > len(songs):
       print("Oops - our list doesn't go that far.")
-      print("Try entering a positive number less than " + str(len(songs)))
+      print("Try entering a positive number less than " + str(len(songs)+1))
       n = int(input())
       return nth_top_song(n, songs)
     else:
