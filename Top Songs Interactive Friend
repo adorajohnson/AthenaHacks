@@ -1,0 +1,187 @@
+## Each song is formatted as [list of Artists, Song Title, list of Genres]
+top_songs = [[["Ariana Grande"], "34+35", ["pop", "r&b"]], \
+             [["Justin Bieber", "benny blanco"], "Lonely", ["pop"]], \
+             [["Ariana Grande"], "positions", ["pop", "r&b"]], \
+             [["Chris Brown", "Young Thug"], "Go Crazy", ["r&b"]], \
+             [["24kGoldn", "Iann Dior"], "Mood", ["pop", "rap"]], \
+             [["Dua Lipa", "Da Baby"], "Levitating", ["pop"]], \
+             [["Olivia Rodrigo"], "drivers license", ["pop"]], \
+             [["Billie Eilish"], "Therefore I Am", ["pop"]], \
+             [["Justin Bieber", "Chance the rapper"], "Holy", ["pop"]], \
+             [["Tate McRae"], "you broke me first", ["pop"]], \
+             [["Ritt Momney"], "Put Your Records On", ["pop"]], \
+             [["AJR"], "Bang!", ["pop"]], \
+             [["Machine Gun Kelly", "blackbear"], "My Ex's Best Friend", ["pop", "punk"]], \
+             [["The Weeknd"], "Save Your Tears", ["r&b"]], \
+             [["Harry Styles"], "Golden", ["pop"]], \
+             [["Pop Smoke"], "What You Know Bout Love", ["hip hop", "rap"]], \
+             [["Justin Bieber"], "Holy", ["pop"]], \
+             [["Ed Sheeran"], "Afterglow", ["pop"]], \
+             [["Ava Max"], "Kings & Queens", ["pop"]], \
+             [["Taylor Swift"], "willow", ["pop", "indie", "folk"]], \
+             [["Megan Thee Stallion"], "Body", ["hip hop", "pop", "rap"]], \
+             [["Sam Smith"], "Diamonds", ["pop"]], \
+             [["All Time Low", "blackbear"], "Monsters", ["rap", "pop", "rock"]], \
+             [["Drake", "Lil Durk"], "Laugh Now Cry Later", ["pop", "hip hop", "rap"]], \
+             [["Ava Max"], "My Head & My Heart", ["pop"]], \
+             [["Gabby Barrett", "Charlie Puth"], "I Hope", ["pop", "country"]], \
+             [["The Kid Laroi"], "SO DONE", ["rap", "hip hop", "rap"]], \
+             [["Bad Bunny", "Jhay Cortez"], "DAKITI", ["latin"]], \
+             [["The Weeknd"], "Blinding Lights", ["pop"]], \
+             [["Jason Derulo", "Adam Levine"], "Lifestyle", ["pop"]]]
+
+error_message = "Hm, that wasn't quite right. Try again"
+
+
+def genre(genre, songs):
+    return list(filter(lambda s: genre in s[2], songs))
+
+def artist_names(artists_list):
+    if artists_list == []:
+        return ""
+    if len(artists_list) == 1:
+        return artists_list[0]
+    else:
+        return artists_list[0] + " and " + artist_names(artists_list[1:])
+
+def names(songs):
+    return list(map(lambda s: s[1] + " by " + artist_names(s[0]), songs))
+
+def liked_songs(songs):
+    if songs == []:
+        return []
+    else:
+        print("If you like this song, save it by entering YES.")
+        print("If you don't want to save it, enter anything else!")
+        print(names([songs[0]]))
+        entered = input()
+        if entered.lower() == "yes":
+            return [songs[0]] + liked_songs(songs[1:])
+        else:
+            return liked_songs(songs[1:])
+
+
+def create_playlist(songs):
+    print("Okay, let's take this month's top songs and make your perfect playlist!")
+    print("To begin, do you prefer to filter by a genre?")
+    print("If so, enter the genre. If you don't discriminate, enter NO")
+    entered = input()
+    if entered.lower() == "no":
+        print("Open to anything! Love that.")
+        new_songs = songs
+    else:
+        new_songs = genre(entered.lower(), songs)
+    if new_songs == []:
+        print("")
+        print("No songs in that genre :(")
+        print("If you want to try again, enter YES. If not, enter NO.")
+        entered = input()
+        if entered.lower() == "yes":
+            return create_playlist(songs)
+        elif entered.lower() == "no":
+            print("I guess that's the end of the road for us... Bye!")
+            return "<3"
+        else:
+            print(error_message)
+            input()
+            return create_playlist(songs)
+    print("")
+    print("Okay, almost there - let's see which of these artists you like")
+    playlist = liked_songs(new_songs)
+    print("Alright!! That was fun, wasn't it?")
+    input()
+    print("Drumroll please...")
+    input()
+    print("Here is your personalized playlist" + "!")
+    print(names(playlist))
+    return beginning()
+
+def combine_list_of_lists(L, pos):
+  if pos >= len(L):
+    return []
+  else:
+    return L[pos] + combine_list_of_lists(L, pos+1)
+
+def top_genre(songs):
+    genre_lists = list(map(lambda song: song[2], songs))
+    genre_names = combine_list_of_lists(genre_lists, 0)
+    genre_counts = list(map(lambda g: genre_names.count(g), genre_names))
+    top_index = genre_counts.index(max(genre_counts))
+    return genre_names[top_index]
+
+def num_artist(artist, songs):
+    artist_lists = list(map(lambda song: song[0], songs))
+    artist_lists = combine_list_of_lists(artist_lists, 0)
+    artist_lists = list(map(lambda song: song.lower(), artist_lists))
+    artist_number = artist_lists.count(artist.lower())
+    return artist_number
+
+def nth_top_song(n, songs):
+    return names([songs[n-1]])[0]
+
+
+def songs_info(songs):
+    print("Let's see if I can't get you the information you so desire...")
+    input()
+    print("Are you looking for the top song? The 5th top song?")
+    print("Maybe you want the genre that's dominating this month...")
+    print("Or you want to know if your favourite artist is here...")
+    input()
+    print("If you want the top genre, enter G.")
+    print("If you're wondering how many top songs an artist has, enter A.")
+    print("If you want to know the nth top song, enter N.")
+    entered = input()
+    entered = entered.lower()
+    if entered == "g":
+        print(top_genre(songs))
+        return beginning()
+    elif entered.lower() == "a":
+        print("What's the name of the artist?")
+        artist = input()
+        print(num_artist(artist, songs))
+        return beginning()
+    elif entered.lower() == "n":
+        print("If you want the Nth top song, enter the integer N.")
+        print("For example, if you want the #1 song, enter 1")
+        n = input()
+        if n.isnumeric():
+            print(nth_top_song(int(n), songs))
+        else:
+            print(error_message)
+            return songs_info(songs)
+    else:
+        print(error_message)
+        return songs_info(songs)
+            
+
+def main_menu(desire):
+    if desire.lower() == "c":
+        return create_playlist(top_songs)
+    elif desire.lower() == "i":
+        return songs_info(top_songs)
+    else:
+        print(error_message)
+        desire = input()
+        return main_menu(desire)
+
+def beginning():
+    print("What can I do for you today, " + name + "?")
+    print("Enter C if you would like to create a personalized playlist from this month's top songs.")
+    print("Enter I if you would like to get some information about this month's top songs.")
+    desire = input()
+    main_menu(desire)
+
+print("Hello music lover!")
+print("Just a heads-up, I'm very talkative...")
+print("but you can always press enter to move on!")
+input()
+print("Yes, just like that!")
+print("My name is Adora.")
+name = input("What's yours? ")
+print("")
+print("Nice to meet you, " + name + ".")
+print("You seem like you would inspire some beautiful music.")
+print("Say, didn't someone write a song about you? Hmm, I'll get back to you on that.")
+input()
+print("Anyways, I'm rambling on - I'm sure you're very busy.")
+beginning()
