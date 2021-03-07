@@ -146,6 +146,7 @@ def songs_info(songs):
         n = input()
         if n.isnumeric():
             print(nth_top_song(int(n), songs))
+            return beginning()
         else:
             print(error_message)
             return songs_info(songs)
