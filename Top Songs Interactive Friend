@@ -107,7 +107,7 @@ def top_genre(songs):
     genre_names = combine_list_of_lists(genre_lists, 0)
     genre_counts = list(map(lambda g: genre_names.count(g), genre_names))
     top_index = genre_counts.index(max(genre_counts))
-    return genre_names[top_index]
+    return "The top genre for this month is " + genre_names[top_index] + "."
 
 def num_artist(artist, songs):
     artist_lists = list(map(lambda song: song[0], songs))
