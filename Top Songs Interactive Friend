@@ -114,7 +114,7 @@ def num_artist(artist, songs):
     artist_lists = combine_list_of_lists(artist_lists, 0)
     artist_lists = list(map(lambda song: song.lower(), artist_lists))
     artist_number = artist_lists.count(artist.lower())
-    return artist_number
+    return artist + " has " + str(artist_number) + " top songs this month."
 
 def nth_top_song(n, songs):
     return names([songs[n-1]])[0]
