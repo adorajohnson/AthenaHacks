@@ -165,6 +165,7 @@ def main_menu(desire):
         return main_menu(desire)
 
 def beginning():
+    print("")
     print("What can I do for you today, " + name + "?")
     print("Enter C if you would like to create a personalized playlist from this month's top songs.")
     print("Enter I if you would like to get some information about this month's top songs.")
