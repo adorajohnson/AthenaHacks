@@ -135,12 +135,12 @@ def songs_info(songs):
     if entered == "g":
         print(top_genre(songs))
         return beginning()
-    elif entered.lower() == "a":
+    elif entered == "a":
         print("What's the name of the artist?")
         artist = input()
         print(num_artist(artist, songs))
         return beginning()
-    elif entered.lower() == "n":
+    elif entered == "n":
         print("If you want the Nth top song, enter the integer N.")
         print("For example, if you want the #1 song, enter 1")
         n = input()
